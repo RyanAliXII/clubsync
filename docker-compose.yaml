@@ -1,0 +1,47 @@
+services:
+  clubsync_postgres:
+    container_name: clubsync_postgres
+    restart: always
+    image: postgres:17.2-alpine3.21
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "4001:5432"
+  clubsync_pgadmin:
+    container_name:  clubsync_pgadmin
+    image: dpage/pgadmin4:2025-02-05-3
+    restart: always
+    depends_on:
+      - clubsync_postgres
+    volumes:
+      - ./pgadmin:/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "4002:80"
+  clubsync_api:
+    container_name: clubsync_api
+    image: ryanali12/dev/clubsync-api
+    depends_on:
+      - clubsync_postgres
+    volumes:
+      - ./ClubSyncAPI:/app
+    ports:
+      - "4003:80"
+    environment:
+      ConnectionStrings__ClubSyncDb: ${CLUBSYNC_DB_CONNECTION_STRING}
+  clubsync_admin:
+    container_name:  clubsync_admin
+    image: ryanali12/dev/clubsync-admin
+    depends_on:
+      - clubsync_api
+    volumes:
+      - ./ClubSyncAdmin/src:/app/src
+      - ./ClubSyncAdmin/tailwind.config.js:/app/tailwind.config.js
+    ports: 
+      - "4004:80"
