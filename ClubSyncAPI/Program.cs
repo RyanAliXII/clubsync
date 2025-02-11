@@ -1,5 +1,5 @@
-using ClubSyncAPI;
 using ClubSyncAPI.Database;
+using ClubSyncAPI.Database.Seeders;
 using ClubSyncAPI.Endpoints;
 using Microsoft.EntityFrameworkCore;
 var allowedRequestOrigins = "ClubSyncApp";
@@ -32,4 +32,8 @@ var app = builder.Build();
 app.MapEndpoints();
 app.MapGet("/", () => new { Title = "ClubSync Admin App" });
 app.UseCors(allowedRequestOrigins);
+using (var scope = app.Services.CreateScope())
+{
+    await SeedRootUser.RunAsync(scope.ServiceProvider);
+}
 app.Run();

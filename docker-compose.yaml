@@ -35,6 +35,10 @@ services:
       - "4003:80"
     environment:
       ConnectionStrings__ClubSyncDb: ${CLUBSYNC_DB_CONNECTION_STRING}
+      ClubSync__RootUser__Email: ${CLUBSYNC_ROOT_USER_EMAIL}
+      ClubSync__RootUser__Password: ${CLUBSYNC_ROOT_USER_PASSWORD}
+      ClubSync__RootUser__GivenName: ${CLUBSYNC_ROOT_USER_GIVEN_NAME}
+      ClubSync__RootUser__Surname: ${CLUBSYNC_ROOT_USER_SURNAME}
   clubsync_admin:
     container_name:  clubsync_admin
     image: ryanali12/dev/clubsync-admin
