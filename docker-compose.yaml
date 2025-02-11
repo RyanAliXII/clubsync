@@ -39,6 +39,9 @@ services:
       ClubSync__RootUser__Password: ${CLUBSYNC_ROOT_USER_PASSWORD}
       ClubSync__RootUser__GivenName: ${CLUBSYNC_ROOT_USER_GIVEN_NAME}
       ClubSync__RootUser__Surname: ${CLUBSYNC_ROOT_USER_SURNAME}
+      JwtSettings__Issuer: ${JWT_ISSUER}
+      JwtSettings__Audience: ${JWT_AUDIENCE}
+      JwtSettings__SecretKey: ${JWT_SECRET_KEY}
   clubsync_admin:
     container_name:  clubsync_admin
     image: ryanali12/dev/clubsync-admin

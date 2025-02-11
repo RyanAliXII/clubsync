@@ -1,12 +1,11 @@
-using ClubSyncAPI.Features.Auth;
-
+using ClubSyncAPI.Features.Users;
 namespace ClubSyncAPI.Endpoints
 {
     public static class EndpointExtension
     {
         public static void MapEndpoints(this IEndpointRouteBuilder app)
         {
-            AuthenticateAdmin.Endpoint.Map(app);
+            SignInAdmin.Endpoint.Map(app);
         }
     }
 
