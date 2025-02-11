@@ -12,6 +12,7 @@ namespace ClubSyncAPI.Features.Users
         [FromServices] SignInManager<User> signInManager,
         [FromServices] UserManager<User> userManager,
         [FromServices] TokenProvider tokenProvider,
+        HttpContext httpContext,
         [FromBody] Request request)
         {
             var user = await userManager.FindByEmailAsync(request.Email);
@@ -33,12 +34,23 @@ namespace ClubSyncAPI.Features.Users
                 });
             }
             var token = tokenProvider.GenerateToken(user);
+            await userManager.RemoveAuthenticationTokenAsync(user, "REFRESHTOKENPROVIDER", "RefreshToken");
+            var refreshToken = await userManager.GenerateUserTokenAsync(user, "REFRESHTOKENPROVIDER", "RefreshToken");
+            await userManager.SetAuthenticationTokenAsync(user, "REFRESHTOKENPROVIDER", "RefreshToken", refreshToken);
+            httpContext.Response.Cookies.Append("RefreshToken", refreshToken, new CookieOptions
+            {
+                HttpOnly = true, // Prevent JavaScript access
+                Secure = true, // Ensure it's sent over HTTPS
+                SameSite = SameSiteMode.Lax,
+                Expires = DateTime.UtcNow.AddDays(7), // Set expiration
 
+            });
             return Results.Ok(new
             {
                 message = "OK",
                 status = StatusCodes.Status200OK,
                 accessToken = token,
+                refreshToken,
                 user = new
                 {
                     id = user.Id,

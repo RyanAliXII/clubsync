@@ -36,7 +36,7 @@ export class AuthService {
 
   signIn(credentials: Credentials): Observable<SignInResult> {
     return this.http
-      .post<SignInApiResponse>(this.url, credentials, { observe: "response" })
+      .post<SignInApiResponse>(this.url, credentials, { observe: "response", withCredentials: true })
       .pipe(
         map((response: HttpResponse<SignInApiResponse>) => ({
           message: response.body?.message || "",

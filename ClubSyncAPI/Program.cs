@@ -40,14 +40,18 @@ builder.Services
 .AddIdentityCore<User>()
 .AddRoles<Role>()
 .AddSignInManager()
-.AddEntityFrameworkStores<ClubSyncIdentityDbContext>();
-
+.AddEntityFrameworkStores<ClubSyncIdentityDbContext>()
+.AddTokenProvider<DataProtectorTokenProvider<User>>("REFRESHTOKENPROVIDER");
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+    options.TokenLifespan = TimeSpan.FromDays(30);
+});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: allowedRequestOrigins,
     policy =>
     {
-        policy.WithOrigins("http://localhost:4004", "http://127.0.0.1:4004").AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins("http://localhost:4004", "http://127.0.0.1:4004").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     });
 });
 
