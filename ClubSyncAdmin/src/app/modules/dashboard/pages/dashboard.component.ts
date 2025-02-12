@@ -1,21 +1,25 @@
 import { Component } from '@angular/core';
-import { InputTextModule } from 'primeng/inputtext';
-
-import { AuthStateService } from '../../../shared/services/auth/auth-state.service';
-import { lastValueFrom } from 'rxjs';
-
+import { AuthManagerService } from '../../../shared/services/auth/auth-manager.service';
+import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'dashboard-module',
   standalone: true,
   templateUrl: "./dashboard.component.html",
+  imports: [ButtonModule]
+
 })
-export class DashboardComponent{
- 
-  constructor( private authStateService: AuthStateService){
+export class DashboardComponent {
+
+  constructor(private authManager: AuthManagerService) {
 
   }
-  ngOnInit(){
- 
+  ngOnInit() {
+
   }
- 
+  async execute() {
+    console.log("execute")
+    const t = await this.authManager.getToken()
+    console.log(t)
+  }
+
 }

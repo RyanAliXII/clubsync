@@ -8,7 +8,7 @@ type AuthState = {
   email: string | null;
   accessToken: string | null;
 }
-interface UserData extends Omit<AuthState, "accessToken">{}
+interface UserData extends Omit<AuthState, "accessToken"> { }
 @Injectable({ providedIn: "root" })
 export class AuthStateService {
   private authStateSubject = new BehaviorSubject<AuthState>({
@@ -18,17 +18,17 @@ export class AuthStateService {
     email: null,
     accessToken: null,
   });
-  user$ = this.authStateSubject.pipe(map(({accessToken, ...rest})=>(rest) as UserData));
- 
+  user$ = this.authStateSubject.pipe(map(({ accessToken, ...rest }) => (rest) as UserData));
+  token$ = this.authStateSubject.pipe(map(state => state.accessToken));
   // Components can subscribe
   set(state: AuthState) {
     this.authStateSubject.next(state);
   }
   clear() {
-    this.authStateSubject.next({ id: null, email: null, accessToken: null, givenName: null,surname: null });
+    this.authStateSubject.next({ id: null, email: null, accessToken: null, givenName: null, surname: null });
   }
-  getToken(){
-     return this.authStateSubject.getValue().accessToken;
+  getToken() {
+    return this.token$;
   }
-  
+
 }

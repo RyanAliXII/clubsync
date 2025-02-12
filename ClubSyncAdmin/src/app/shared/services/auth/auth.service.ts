@@ -33,7 +33,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
   signIn(credentials: Credentials): Observable<SignInResult> {
     return this.http
-      .post<SignInApiResponse>("http://localhost:4003/api/admin/v1/sign-in", credentials, { observe: "response", withCredentials: true })
+      .post<SignInApiResponse>("/sign-in", credentials, { observe: "response", withCredentials: true })
       .pipe(
         map((response: HttpResponse<SignInApiResponse>) => ({
           message: response.body?.message || "",
@@ -62,7 +62,7 @@ export class AuthService {
   }
   signInWithRefreshToken(): Observable<SignInResult> {
     return this.http
-      .post<SignInApiResponse>("http://localhost:4003/api/admin/v1/refresh-token", null, { observe: "response", withCredentials: true })
+      .post<SignInApiResponse>("/refresh-token", null, { observe: "response", withCredentials: true })
       .pipe(
         map((response: HttpResponse<SignInApiResponse>) => ({
           message: response.body?.message || "",
