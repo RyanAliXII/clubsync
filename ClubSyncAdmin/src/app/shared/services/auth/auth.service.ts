@@ -3,24 +3,24 @@ import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/htt
 import { catchError, map } from "rxjs/operators";
 import { Observable, of } from "rxjs";
 
-type Credentials = {
+export type Credentials = {
   email: string;
   password: string;
 };
-type UserData = {
+export type UserData = {
   id: string;
   givenName: string;
   surname: string;
   email: string;
 };
-type SignInApiResponse = {
+export type SignInApiResponse = {
   message: string;
   accessToken?: string;
   refreshToken?: string;
   user?: UserData;
 };
 
-type SignInResult = {
+export type SignInResult = {
   message: string;
   isSuccess: boolean;
   accessToken: string | null;
@@ -31,9 +31,7 @@ type SignInResult = {
 @Injectable({ providedIn: "root" })
 export class AuthService {
   private url: string = "http://localhost:4003/api/admin/v1/sign-in";
-
   constructor(private http: HttpClient) {}
-
   signIn(credentials: Credentials): Observable<SignInResult> {
     return this.http
       .post<SignInApiResponse>(this.url, credentials, { observe: "response", withCredentials: true })

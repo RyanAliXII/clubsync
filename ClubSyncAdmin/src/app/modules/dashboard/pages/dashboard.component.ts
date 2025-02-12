@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 
-import { AuthStateService } from '../../../shared/services/auth-state.service';
+import { AuthStateService } from '../../../shared/services/auth/auth-state.service';
 
 @Component({
   selector: 'dashboard-module',

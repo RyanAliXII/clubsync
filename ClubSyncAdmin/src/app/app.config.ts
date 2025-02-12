@@ -5,8 +5,10 @@ import {provideHttpClient} from "@angular/common/http"
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import { ClubSyncPreset } from './clubsync.preset';
-import { AuthService } from './modules/login/services/auth.service';
-import { AuthStateService } from './shared/services/auth-state.service';
+import { AuthService } from './shared/services/auth/auth.service';
+import { AuthStateService } from './shared/services/auth/auth-state.service';
+import { AuthManagerService } from './shared/services/auth/auth-manager.service';
+import { AuthGuard } from './guards/auth.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +18,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     {provide: AuthService},
     {provide: AuthStateService},
+    {provide: AuthGuard},
+    {provide: AuthManagerService},
     providePrimeNG({
         theme: {
             preset: ClubSyncPreset
