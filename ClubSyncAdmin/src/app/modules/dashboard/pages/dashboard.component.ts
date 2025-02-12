@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 
 import { AuthStateService } from '../../../shared/services/auth/auth-state.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'dashboard-module',
@@ -14,7 +15,7 @@ export class DashboardComponent{
 
   }
   ngOnInit(){
-    console.log(this.authStateService.user$);
+ 
   }
  
 }

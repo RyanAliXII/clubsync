@@ -44,7 +44,7 @@ builder.Services
 .AddTokenProvider<DataProtectorTokenProvider<User>>("REFRESHTOKENPROVIDER");
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
 {
-    options.TokenLifespan = TimeSpan.FromDays(30);
+    options.TokenLifespan = TimeSpan.FromDays(1);
 });
 builder.Services.AddCors(options =>
 {

@@ -42,7 +42,7 @@ namespace ClubSyncAPI.Features.Users
                 HttpOnly = true, // Prevent JavaScript access
                 Secure = true, // Ensure it's sent over HTTPS
                 SameSite = SameSiteMode.Lax,
-                Expires = DateTime.UtcNow.AddDays(7), // Set expiration
+                Expires = DateTime.UtcNow.AddDays(1), // Set expiration
 
             });
             return Results.Ok(new

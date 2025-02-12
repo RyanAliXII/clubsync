@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
@@ -10,5 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 
 })
 export class AppComponent {
-
+    private url: string = "http://localhost:4003/api/admin/v1/refresh-token";
+    constructor(private http: HttpClient) {}
+    ngOnInit(){}
 }

@@ -7,12 +7,23 @@ export class AuthManagerService {
     constructor(private authService: AuthService, private authStateService: AuthStateService){}
     signIn(credentials: Credentials){
         return this.authService.signIn(credentials).pipe(tap((result)=>{
-            if(!result.isSuccess){
+            if(!result.isSuccess || !result.user){
                 return;
               }
-              if(!result.user){
-                return
-              }
+            this.authStateService.set({
+                    accessToken: result.accessToken,
+                    email: result.user.email,
+                    id: result.user.id,
+                    givenName: result.user.givenName,
+                    surname: result.user.surname,
+            })
+        }))
+    }
+    signInWithRefreshToken(){
+        return this.authService.signInWithRefreshToken().pipe(tap((result)=>{
+            if(!result.isSuccess || !result.user){
+                return;
+            }
             this.authStateService.set({
                     accessToken: result.accessToken,
                     email: result.user.email,
