@@ -35,22 +35,18 @@ export class AuthManagerService {
     }))
   }
   isAuth() {
-    return this.authStateService.token$.pipe(map(token => !!token));
+    return this.authStateService.getToken().pipe(map(token => !!token));
   }
   async getToken() {
     const token = await firstValueFrom(this.authStateService.getToken());
     if (!token) {
-      return "";
+      return null;
     }
-
     const decodedToken = jwtDecode<{ exp: number }>(token);
     if (!decodedToken.exp) {
-      return "";
+      return null;
     }
-
     const nowUtc = Math.floor(Date.now() / 1000);
-    console.log(nowUtc, decodedToken.exp);
-
     if (nowUtc >= decodedToken.exp) {
       const result = await firstValueFrom(this.authService.signInWithRefreshToken());
       if (result.isSuccess && result.user) {

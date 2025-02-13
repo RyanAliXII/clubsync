@@ -19,7 +19,6 @@ export class AuthStateService {
     accessToken: null,
   });
   user$ = this.authStateSubject.pipe(map(({ accessToken, ...rest }) => (rest) as UserData));
-  token$ = this.authStateSubject.pipe(map(state => state.accessToken));
   // Components can subscribe
   set(state: AuthState) {
     this.authStateSubject.next(state);
@@ -28,7 +27,7 @@ export class AuthStateService {
     this.authStateSubject.next({ id: null, email: null, accessToken: null, givenName: null, surname: null });
   }
   getToken() {
-    return this.token$;
+    return this.authStateSubject.pipe(map(state => state.accessToken));
   }
 
 }
