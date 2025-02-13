@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthManagerService } from '../../../shared/services/auth/auth-manager.service';
+import { AuthManagerService } from '#core/services/auth/auth-manager.service';
 import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'dashboard-module',
