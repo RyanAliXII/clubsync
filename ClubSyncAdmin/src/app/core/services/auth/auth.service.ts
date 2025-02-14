@@ -2,17 +2,13 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/http";
 import { catchError, map } from "rxjs/operators";
 import { Observable, of } from "rxjs";
+import { UserData } from "./auth-state.service";
 
 export type Credentials = {
   email: string;
   password: string;
 };
-export type UserData = {
-  id: string;
-  givenName: string;
-  surname: string;
-  email: string;
-};
+
 export type SignInApiResponse = {
   message: string;
   accessToken?: string;
@@ -30,7 +26,7 @@ export type SignInResult = {
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   signIn(credentials: Credentials): Observable<SignInResult> {
     return this.http
       .post<SignInApiResponse>("/sign-in", credentials, { observe: "response", withCredentials: true })
@@ -42,11 +38,11 @@ export class AuthService {
           refreshToken: response.body?.refreshToken || null,
           user: response.body?.user
             ? {
-                givenName: response.body.user.givenName,
-                surname: response.body.user.surname,
-                id: response.body.user.id,
-                email: response.body.user.email
-              }
+              givenName: response.body.user.givenName,
+              surname: response.body.user.surname,
+              id: response.body.user.id,
+              email: response.body.user.email
+            }
             : null,
         })),
         catchError((error: HttpErrorResponse) =>
@@ -71,11 +67,11 @@ export class AuthService {
           refreshToken: response.body?.refreshToken || null,
           user: response.body?.user
             ? {
-                givenName: response.body.user.givenName,
-                surname: response.body.user.surname,
-                id: response.body.user.id,
-                email: response.body.user.email
-              }
+              givenName: response.body.user.givenName,
+              surname: response.body.user.surname,
+              id: response.body.user.id,
+              email: response.body.user.email
+            }
             : null,
         })),
         catchError((error: HttpErrorResponse) =>

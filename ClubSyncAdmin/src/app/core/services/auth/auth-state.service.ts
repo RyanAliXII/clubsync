@@ -8,7 +8,7 @@ type AuthState = {
   email: string | null;
   accessToken: string | null;
 }
-interface UserData extends Omit<AuthState, "accessToken"> { }
+export interface UserData extends Omit<AuthState, "accessToken"> { }
 @Injectable({ providedIn: "root" })
 export class AuthStateService {
   private authStateSubject = new BehaviorSubject<AuthState>({

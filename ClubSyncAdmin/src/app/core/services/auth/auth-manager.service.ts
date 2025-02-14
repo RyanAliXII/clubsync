@@ -37,6 +37,9 @@ export class AuthManagerService {
   isAuth() {
     return this.authStateService.getToken().pipe(map(token => !!token));
   }
+  getUser() {
+    return this.authStateService.user$;
+  }
   async getToken() {
     const token = await firstValueFrom(this.authStateService.getToken());
     if (!token) {

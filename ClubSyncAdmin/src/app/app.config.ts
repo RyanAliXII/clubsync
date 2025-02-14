@@ -10,7 +10,6 @@ import { AuthStateService } from '#core/services/auth/auth-state.service';
 import { AuthManagerService } from '#core/services/auth/auth-manager.service';
 import { AuthGuard } from '#core/guards/auth.guard';
 import { baseUrlInterceptor } from '#core/interceptors/base-url-interceptor';
-import { environment } from '../environments/environment.development';
 function initializeApp() {
     const authManager = inject(AuthManagerService);
     return authManager.signInWithRefreshToken();
@@ -24,11 +23,16 @@ export const appConfig: ApplicationConfig = {
         { provide: AuthService },
         { provide: AuthStateService },
         { provide: AuthGuard },
-
         provideAppInitializer(initializeApp),
         providePrimeNG({
             theme: {
-                preset: ClubSyncPreset
-            }
+                preset: ClubSyncPreset,
+                options: {
+                    cssLayer: {
+                        name: 'components'
+                    },
+                }
+            },
+
         })]
 };
