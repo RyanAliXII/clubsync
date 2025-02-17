@@ -30,7 +30,7 @@ services:
     depends_on:
       - clubsync_postgres
     volumes:
-      - ./ClubSyncAPI:/app
+      - ./ClubSync.Api:/app
     ports:
       - "4003:80"
     environment:
@@ -48,7 +48,7 @@ services:
     depends_on:
       - clubsync_api
     volumes:
-      - ./ClubSyncAdmin/src:/app/src
-      - ./ClubSyncAdmin/tailwind.config.js:/app/tailwind.config.js
+      - ./clubsync-admin/src:/app/src
+      - ./clubsync-admin/tailwind.config.js:/app/tailwind.config.js
     ports: 
       - "4004:80"
